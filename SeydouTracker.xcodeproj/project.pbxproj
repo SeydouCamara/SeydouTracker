@@ -7,28 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001 /* SeydouTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101; };
-		002 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102; };
-		003 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103; };
-		004 /* CycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104; };
-		005 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105; };
-		006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106; };
-		007 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107; };
-		008 /* DayLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108; };
-		009 /* MealLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109; };
-		010 /* SupplementLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110; };
-		011 /* PEDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111; };
-		012 /* Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112; };
-		013 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113; };
-		014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200; };
-		015 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201; };
-		016 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114; };
-		017 /* MealSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115; };
-		018 /* SupplementSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116; };
-		019 /* PEDSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117; };
-		020 /* TrackersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118; };
-		021 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119; };
-		022 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120; };
+		001 /* SeydouTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101 /* SeydouTrackerApp.swift */; };
+		002 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102 /* MainTabView.swift */; };
+		003 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103 /* TodayView.swift */; };
+		004 /* CycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104 /* CycleView.swift */; };
+		005 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105 /* HistoryView.swift */; };
+		006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106 /* SettingsView.swift */; };
+		007 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107 /* Enums.swift */; };
+		008 /* DayLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108 /* DayLog.swift */; };
+		009 /* MealLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109 /* MealLog.swift */; };
+		010 /* SupplementLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110 /* SupplementLog.swift */; };
+		011 /* PEDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111 /* PEDLog.swift */; };
+		012 /* Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112 /* Cycle.swift */; };
+		013 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113 /* Constants.swift */; };
+		014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200 /* Assets.xcassets */; };
+		015 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201 /* Preview Assets.xcassets */; };
+		016 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114 /* TodayViewModel.swift */; };
+		017 /* MealSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115 /* MealSectionView.swift */; };
+		018 /* SupplementSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116 /* SupplementSectionView.swift */; };
+		019 /* PEDSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117 /* PEDSectionView.swift */; };
+		020 /* TrackersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118 /* TrackersView.swift */; };
+		021 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119 /* NotificationManager.swift */; };
+		022 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120 /* HapticManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -214,7 +214,7 @@
 /* Begin PBXNativeTarget section */
 		500 /* SeydouTracker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 600;
+			buildConfigurationList = 600 /* Build configuration list for PBXNativeTarget "SeydouTracker" */;
 			buildPhases = (
 				501 /* Sources */,
 				300 /* Frameworks */,
@@ -237,14 +237,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					500 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = 701;
+			buildConfigurationList = 701 /* Build configuration list for PBXProject "SeydouTracker" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = fr;
 			hasScannedForEncodings = 0;
@@ -311,6 +311,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -364,6 +365,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -374,6 +376,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -420,6 +423,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -433,6 +437,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SeydouTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = 8796D9NT4P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SeydouTracker;
@@ -462,6 +467,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SeydouTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = 8796D9NT4P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SeydouTracker;
