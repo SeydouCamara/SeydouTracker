@@ -414,6 +414,7 @@ struct WeeklyStatItem: View {
 // MARK: - Day History Row
 struct DayHistoryRow: View {
     let dayLog: DayLog
+    @AppStorage("hideAdvancedSupplements") private var hideAdvancedSupplements = false
 
     private var score: Int {
         Int(dayLog.dailyScore * 100)
@@ -489,11 +490,13 @@ struct DayHistoryRow: View {
                         color: .appSecondary
                     )
 
-                    MiniProgressBar(
-                        icon: "bolt.fill",
-                        progress: dayLog.totalPEDsCount > 0 ? Double(dayLog.completedPEDsCount) / Double(dayLog.totalPEDsCount) : 0,
-                        color: .appAlert
-                    )
+                    if !hideAdvancedSupplements {
+                        MiniProgressBar(
+                            icon: "bolt.fill",
+                            progress: dayLog.totalAdvancedSupplementsCount > 0 ? Double(dayLog.completedAdvancedSupplementsCount) / Double(dayLog.totalAdvancedSupplementsCount) : 0,
+                            color: .appAlert
+                        )
+                    }
 
                     MiniProgressBar(
                         icon: "drop.fill",

@@ -13,7 +13,13 @@ final class DayLog {
 
     @Relationship(deleteRule: .cascade) var meals: [MealLog]
     @Relationship(deleteRule: .cascade) var supplements: [SupplementLog]
-    @Relationship(deleteRule: .cascade) var peds: [PEDLog]
+    @Relationship(deleteRule: .cascade) var advancedSupplements: [AdvancedSupplementLog]
+
+    // Alias pour compatibilité
+    var peds: [AdvancedSupplementLog] {
+        get { advancedSupplements }
+        set { advancedSupplements = newValue }
+    }
 
     var dayType: DayType {
         get { DayType(rawValue: dayTypeRaw) ?? .soir }
@@ -37,7 +43,7 @@ final class DayLog {
         self.weight = weight
         self.meals = []
         self.supplements = []
-        self.peds = []
+        self.advancedSupplements = []
     }
 
     // MARK: - Computed Properties
@@ -58,13 +64,17 @@ final class DayLog {
         supplements.count
     }
 
-    var completedPEDsCount: Int {
-        peds.filter { $0.isCompleted }.count
+    var completedAdvancedSupplementsCount: Int {
+        advancedSupplements.filter { $0.isCompleted }.count
     }
 
-    var totalPEDsCount: Int {
-        peds.count
+    var totalAdvancedSupplementsCount: Int {
+        advancedSupplements.count
     }
+
+    // Alias pour compatibilité
+    var completedPEDsCount: Int { completedAdvancedSupplementsCount }
+    var totalPEDsCount: Int { totalAdvancedSupplementsCount }
 
     var waterProgress: Double {
         min(waterIntake / 3.0, 1.0)  // Objectif 3L
@@ -83,12 +93,12 @@ final class DayLog {
     var dailyScore: Double {
         let mealScore = totalMealsCount > 0 ? Double(completedMealsCount) / Double(totalMealsCount) : 0
         let supplementScore = totalSupplementsCount > 0 ? Double(completedSupplementsCount) / Double(totalSupplementsCount) : 0
-        let pedScore = totalPEDsCount > 0 ? Double(completedPEDsCount) / Double(totalPEDsCount) : 0
+        let advancedSupplementScore = totalAdvancedSupplementsCount > 0 ? Double(completedAdvancedSupplementsCount) / Double(totalAdvancedSupplementsCount) : 0
         let waterScore = waterProgress
         let sleepScore = sleepStatus == .optimal ? 1.0 : (sleepStatus == .acceptable ? 0.7 : 0.3)
 
-        // Pondération : Repas 40%, Compléments 25%, PEDs 15%, Eau 10%, Sommeil 10%
-        return (mealScore * 0.40) + (supplementScore * 0.25) + (pedScore * 0.15) + (waterScore * 0.10) + (sleepScore * 0.10)
+        // Pondération : Repas 40%, Compléments 25%, Suppléments avancés 15%, Eau 10%, Sommeil 10%
+        return (mealScore * 0.40) + (supplementScore * 0.25) + (advancedSupplementScore * 0.15) + (waterScore * 0.10) + (sleepScore * 0.10)
     }
 
     var formattedDate: String {

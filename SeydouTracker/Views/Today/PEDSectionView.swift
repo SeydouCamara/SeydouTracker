@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PEDSectionView: View {
+struct AdvancedSupplementSectionView: View {
     @Bindable var viewModel: TodayViewModel
     @State private var isExpanded: Bool = true
 
@@ -19,21 +19,21 @@ struct PEDSectionView: View {
                         .font(.title3)
                         .foregroundColor(.appAlert)
 
-                    Text("PEDs")
+                    Text("Suppléments")
                         .font(.headline)
                         .foregroundColor(.primary)
 
                     Spacer()
 
                     // Compteur
-                    Text("\(completedPEDs)/\(totalPEDs)")
+                    Text("\(completedSupplements)/\(totalSupplements)")
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundColor(completedPEDs == totalPEDs && totalPEDs > 0 ? .appSuccess : .secondary)
+                        .foregroundColor(completedSupplements == totalSupplements && totalSupplements > 0 ? .appSuccess : .secondary)
 
                     // Mini barre de progression
-                    ProgressView(value: pedsProgress)
-                        .progressViewStyle(LinearProgressViewStyle(tint: completedPEDs == totalPEDs && totalPEDs > 0 ? .appSuccess : .appAlert))
+                    ProgressView(value: supplementsProgress)
+                        .progressViewStyle(LinearProgressViewStyle(tint: completedSupplements == totalSupplements && totalSupplements > 0 ? .appSuccess : .appAlert))
                         .frame(width: 50)
 
                     // Chevron
@@ -71,11 +71,11 @@ struct PEDSectionView: View {
                         .padding(.horizontal, 4)
                     }
 
-                    // Liste des PEDs
+                    // Liste des suppléments
                     VStack(spacing: 8) {
-                        ForEach(sortedPEDs, id: \.id) { ped in
-                            PEDRowView(ped: ped, cycleWeek: viewModel.currentCycle?.currentWeek ?? 1) {
-                                viewModel.togglePED(ped)
+                        ForEach(sortedSupplements, id: \.id) { supplement in
+                            AdvancedSupplementRowView(supplement: supplement, cycleWeek: viewModel.currentCycle?.currentWeek ?? 1) {
+                                viewModel.toggleAdvancedSupplement(supplement)
                             }
                         }
                     }
@@ -109,33 +109,36 @@ struct PEDSectionView: View {
 
     // MARK: - Computed Properties
 
-    private var sortedPEDs: [PEDLog] {
-        let peds = viewModel.currentDayLog?.peds ?? []
-        let order: [PEDType] = [.rad140, .cardarine, .albuterol, .enclomiphene]
-        return peds.sorted { ped1, ped2 in
-            let index1 = order.firstIndex(of: ped1.pedType) ?? 0
-            let index2 = order.firstIndex(of: ped2.pedType) ?? 0
+    private var sortedSupplements: [AdvancedSupplementLog] {
+        let supplements = viewModel.currentDayLog?.advancedSupplements ?? []
+        let order: [AdvancedSupplementType] = [.rad140, .cardarine, .albuterol, .enclomiphene]
+        return supplements.sorted { s1, s2 in
+            let index1 = order.firstIndex(of: s1.supplementType) ?? 0
+            let index2 = order.firstIndex(of: s2.supplementType) ?? 0
             return index1 < index2
         }
     }
 
-    private var totalPEDs: Int {
-        viewModel.currentDayLog?.totalPEDsCount ?? 0
+    private var totalSupplements: Int {
+        viewModel.currentDayLog?.totalAdvancedSupplementsCount ?? 0
     }
 
-    private var completedPEDs: Int {
-        viewModel.currentDayLog?.completedPEDsCount ?? 0
+    private var completedSupplements: Int {
+        viewModel.currentDayLog?.completedAdvancedSupplementsCount ?? 0
     }
 
-    private var pedsProgress: Double {
-        guard totalPEDs > 0 else { return 0 }
-        return Double(completedPEDs) / Double(totalPEDs)
+    private var supplementsProgress: Double {
+        guard totalSupplements > 0 else { return 0 }
+        return Double(completedSupplements) / Double(totalSupplements)
     }
 }
 
-// MARK: - PED Row View
-struct PEDRowView: View {
-    let ped: PEDLog
+// Alias pour compatibilité
+typealias PEDSectionView = AdvancedSupplementSectionView
+
+// MARK: - Advanced Supplement Row View
+struct AdvancedSupplementRowView: View {
+    let supplement: AdvancedSupplementLog
     let cycleWeek: Int
     let onToggle: () -> Void
 
@@ -151,10 +154,10 @@ struct PEDRowView: View {
                 // Checkbox
                 ZStack {
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(ped.isCompleted ? Color.appAlert : Color.gray.opacity(0.3), lineWidth: 2)
+                        .stroke(supplement.isCompleted ? Color.appAlert : Color.gray.opacity(0.3), lineWidth: 2)
                         .frame(width: 26, height: 26)
 
-                    if ped.isCompleted {
+                    if supplement.isCompleted {
                         RoundedRectangle(cornerRadius: 6)
                             .fill(Color.appAlert)
                             .frame(width: 26, height: 26)
@@ -166,22 +169,22 @@ struct PEDRowView: View {
                 }
 
                 // Icône
-                Image(systemName: ped.pedType.icon)
+                Image(systemName: supplement.supplementType.icon)
                     .font(.system(size: 16))
-                    .foregroundColor(ped.isCompleted ? .appAlert : .secondary)
+                    .foregroundColor(supplement.isCompleted ? .appAlert : .secondary)
                     .frame(width: 24)
 
                 // Infos
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(ped.pedType.displayName)
+                    Text(supplement.supplementType.displayName)
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundColor(ped.isCompleted ? .secondary : .primary)
-                        .strikethrough(ped.isCompleted)
+                        .foregroundColor(supplement.isCompleted ? .secondary : .primary)
+                        .strikethrough(supplement.isCompleted)
 
                     // Dosage avec indication de changement
                     HStack(spacing: 4) {
-                        Text(ped.dosage)
+                        Text(supplement.dosage)
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.appAlert)
@@ -191,7 +194,7 @@ struct PEDRowView: View {
                             .cornerRadius(4)
 
                         // Indicateur si le dosage change bientôt
-                        if let nextDosage = getNextDosageInfo(for: ped.pedType, currentWeek: cycleWeek) {
+                        if let nextDosage = getNextDosageInfo(for: supplement.supplementType, currentWeek: cycleWeek) {
                             Text(nextDosage)
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
@@ -202,7 +205,7 @@ struct PEDRowView: View {
                 Spacer()
 
                 // Badge spécial pour Enclomiphène (S5+)
-                if ped.pedType == .enclomiphene {
+                if supplement.supplementType == .enclomiphene {
                     Text("S5+")
                         .font(.caption2)
                         .fontWeight(.bold)
@@ -217,18 +220,18 @@ struct PEDRowView: View {
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(ped.isCompleted ? Color.appAlert.opacity(0.08) : Color.clear)
+                    .fill(supplement.isCompleted ? Color.appAlert.opacity(0.08) : Color.clear)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(ped.isCompleted ? Color.appAlert.opacity(0.2) : Color.gray.opacity(0.15), lineWidth: 1)
+                    .stroke(supplement.isCompleted ? Color.appAlert.opacity(0.2) : Color.gray.opacity(0.15), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
     }
 
-    private func getNextDosageInfo(for pedType: PEDType, currentWeek: Int) -> String? {
-        switch pedType {
+    private func getNextDosageInfo(for supplementType: AdvancedSupplementType, currentWeek: Int) -> String? {
+        switch supplementType {
         case .rad140:
             if currentWeek == 4 { return "→ 15mg S5" }
         case .albuterol:
@@ -241,8 +244,11 @@ struct PEDRowView: View {
     }
 }
 
+// Alias pour compatibilité
+typealias PEDRowView = AdvancedSupplementRowView
+
 #Preview {
-    PEDSectionView(viewModel: TodayViewModel())
+    AdvancedSupplementSectionView(viewModel: TodayViewModel())
         .padding()
         .background(Color.appGroupedBackground)
 }

@@ -220,8 +220,8 @@ enum TimingSlot: String, CaseIterable, Codable {
     }
 }
 
-// MARK: - Types de PEDs
-enum PEDType: String, CaseIterable, Codable {
+// MARK: - Types de Suppléments Avancés (anciennement PEDs)
+enum AdvancedSupplementType: String, CaseIterable, Codable {
     case rad140 = "RAD_140"
     case cardarine = "CARDARINE"
     case albuterol = "ALBUTEROL"
@@ -266,7 +266,7 @@ enum PEDType: String, CaseIterable, Codable {
         }
     }
 
-    // Est-ce que ce PED est actif cette semaine ?
+    // Est-ce que ce supplément est actif cette semaine ?
     func isActive(forWeek week: Int) -> Bool {
         if self == .enclomiphene {
             return week >= 5
@@ -274,3 +274,6 @@ enum PEDType: String, CaseIterable, Codable {
         return true
     }
 }
+
+// Alias pour compatibilité
+typealias PEDType = AdvancedSupplementType

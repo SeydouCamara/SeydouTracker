@@ -14,6 +14,7 @@ struct SettingsView: View {
     @State private var showingDeleteDataAlert = false
     @State private var showingPermissionAlert = false
     @State private var pendingNotificationsCount = 0
+    @State private var hideAdvancedSupplements = false
 
     private let notificationManager = NotificationManager.shared
 
@@ -74,38 +75,59 @@ struct SettingsView: View {
                     Text("Notifications")
                 } footer: {
                     if notificationsEnabled {
-                        Text("Tu recevras des rappels pour : PEDs (matin), repas, hydratation, et bilan du soir.")
+                        Text("Tu recevras des rappels pour : suppléments (matin), repas, hydratation, et bilan du soir.")
                     } else {
                         Text("Active les notifications pour ne rien oublier.")
                     }
                 }
 
-                // Section Cycle
+                // Section Cycle (masquée si suppléments cachés)
+                if !hideAdvancedSupplements {
+                    Section {
+                        Button(action: { showingResetCycleAlert = true }) {
+                            SettingsRow(
+                                icon: "arrow.clockwise",
+                                iconColor: .appSecondary,
+                                title: "Nouveau cycle",
+                                subtitle: "Démarre un nouveau cycle de 8 semaines"
+                            )
+                        }
+
+                        if let activeCycle = allCycles.first(where: { $0.isActive }) {
+                            HStack {
+                                SettingsRow(
+                                    icon: "calendar",
+                                    iconColor: .appPrimary,
+                                    title: "Cycle actuel"
+                                )
+                                Spacer()
+                                Text("Semaine \(activeCycle.currentWeek)/8")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    } header: {
+                        Text("Cycle Suppléments")
+                    }
+                }
+
+                // Section Affichage Suppléments
                 Section {
-                    Button(action: { showingResetCycleAlert = true }) {
+                    Toggle(isOn: $hideAdvancedSupplements) {
                         SettingsRow(
-                            icon: "arrow.clockwise",
-                            iconColor: .appSecondary,
-                            title: "Nouveau cycle",
-                            subtitle: "Démarre un nouveau cycle de 8 semaines"
+                            icon: "eye.slash.fill",
+                            iconColor: .appAlert,
+                            title: "Masquer les suppléments"
                         )
                     }
-
-                    if let activeCycle = allCycles.first(where: { $0.isActive }) {
-                        HStack {
-                            SettingsRow(
-                                icon: "calendar",
-                                iconColor: .appPrimary,
-                                title: "Cycle actuel"
-                            )
-                            Spacer()
-                            Text("Semaine \(activeCycle.currentWeek)/8")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                    .tint(.appAlert)
+                    .onChange(of: hideAdvancedSupplements) { _, newValue in
+                        UserDefaults.standard.set(newValue, forKey: "hideAdvancedSupplements")
                     }
                 } header: {
-                    Text("Cycle PEDs")
+                    Text("Affichage")
+                } footer: {
+                    Text("Masque la section suppléments (RAD-140, Cardarine, etc.) de la vue Aujourd'hui et du cycle.")
                 }
 
                 // Section Données
@@ -218,7 +240,7 @@ struct SettingsView: View {
                     resetToday()
                 }
             } message: {
-                Text("Cela va réinitialiser tous les repas, compléments et PEDs d'aujourd'hui. Cette action est irréversible.")
+                Text("Cela va réinitialiser tous les repas, compléments et suppléments d'aujourd'hui. Cette action est irréversible.")
             }
             .alert("Nouveau cycle", isPresented: $showingResetCycleAlert) {
                 Button("Annuler", role: .cancel) { }
@@ -267,6 +289,7 @@ struct SettingsView: View {
 
     private func loadSettings() {
         notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+        hideAdvancedSupplements = UserDefaults.standard.bool(forKey: "hideAdvancedSupplements")
 
         if let morningData = UserDefaults.standard.object(forKey: "morningReminderTime") as? Date {
             morningReminderTime = morningData
@@ -388,12 +411,14 @@ struct SettingsView: View {
         UserDefaults.standard.removeObject(forKey: "notificationsEnabled")
         UserDefaults.standard.removeObject(forKey: "morningReminderTime")
         UserDefaults.standard.removeObject(forKey: "eveningReminderTime")
+        UserDefaults.standard.removeObject(forKey: "hideAdvancedSupplements")
 
         notificationManager.cancelAllNotifications()
 
         try? modelContext.save()
 
         notificationsEnabled = false
+        hideAdvancedSupplements = false
 
         let impactFeedback = UINotificationFeedbackGenerator()
         impactFeedback.notificationOccurred(.warning)

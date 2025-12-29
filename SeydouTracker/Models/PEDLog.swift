@@ -2,31 +2,47 @@ import Foundation
 import SwiftData
 
 @Model
-final class PEDLog {
+final class AdvancedSupplementLog {
     var id: UUID
-    var pedTypeRaw: String
+    var supplementTypeRaw: String
     var dosage: String
     var isCompleted: Bool
     var completedAt: Date?
 
-    @Relationship(inverse: \DayLog.peds) var dayLog: DayLog?
+    @Relationship(inverse: \DayLog.advancedSupplements) var dayLog: DayLog?
 
-    var pedType: PEDType {
-        get { PEDType(rawValue: pedTypeRaw) ?? .rad140 }
-        set { pedTypeRaw = newValue.rawValue }
+    var supplementType: AdvancedSupplementType {
+        get { AdvancedSupplementType(rawValue: supplementTypeRaw) ?? .rad140 }
+        set { supplementTypeRaw = newValue.rawValue }
+    }
+
+    // Alias pour compatibilité
+    var pedType: AdvancedSupplementType {
+        get { supplementType }
+        set { supplementType = newValue }
     }
 
     init(
-        pedType: PEDType,
+        supplementType: AdvancedSupplementType,
         dosage: String,
         isCompleted: Bool = false,
         completedAt: Date? = nil
     ) {
         self.id = UUID()
-        self.pedTypeRaw = pedType.rawValue
+        self.supplementTypeRaw = supplementType.rawValue
         self.dosage = dosage
         self.isCompleted = isCompleted
         self.completedAt = completedAt
+    }
+
+    // Convenience initializer pour compatibilité
+    convenience init(
+        pedType: AdvancedSupplementType,
+        dosage: String,
+        isCompleted: Bool = false,
+        completedAt: Date? = nil
+    ) {
+        self.init(supplementType: pedType, dosage: dosage, isCompleted: isCompleted, completedAt: completedAt)
     }
 
     func toggle() {
@@ -34,3 +50,6 @@ final class PEDLog {
         completedAt = isCompleted ? Date() : nil
     }
 }
+
+// Alias pour compatibilité
+typealias PEDLog = AdvancedSupplementLog

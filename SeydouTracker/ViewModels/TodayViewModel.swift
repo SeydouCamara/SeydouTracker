@@ -200,9 +200,14 @@ class TodayViewModel {
         saveContext()
     }
 
-    func togglePED(_ ped: PEDLog) {
-        ped.toggle()
+    func toggleAdvancedSupplement(_ supplement: AdvancedSupplementLog) {
+        supplement.toggle()
         saveContext()
+    }
+
+    // Alias pour compatibilité
+    func togglePED(_ ped: PEDLog) {
+        toggleAdvancedSupplement(ped)
     }
 
     private func saveContext() {

@@ -54,7 +54,7 @@ class NotificationManager {
         // Programmer les nouvelles
         scheduleMorningNotifications(at: morningTime)
         scheduleEveningNotifications(at: eveningTime)
-        schedulePEDReminder(at: morningTime)
+        scheduleSupplementReminder(at: morningTime)
         scheduleWaterReminders()
     }
 
@@ -64,10 +64,10 @@ class NotificationManager {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.hour, .minute], from: time)
 
-        // Notification PEDs + Compléments matin
+        // Notification Suppléments + Compléments matin
         let content = UNMutableNotificationContent()
         content.title = "Bonjour Seydou ! 💪"
-        content.body = "N'oublie pas tes PEDs et compléments du matin."
+        content.body = "N'oublie pas tes suppléments et compléments du matin."
         content.sound = .default
         content.badge = 1
 
@@ -109,26 +109,31 @@ class NotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
 
-    // MARK: - PED Reminder
+    // MARK: - Supplement Reminder
 
-    private func schedulePEDReminder(at morningTime: Date) {
+    private func scheduleSupplementReminder(at morningTime: Date) {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.hour, .minute], from: morningTime)
         // 30 minutes après le réveil
         components.minute = (components.minute ?? 0) + 30
 
         let content = UNMutableNotificationContent()
-        content.title = "PEDs du jour 💊"
-        content.body = "Pense à prendre tes PEDs : RAD-140, Cardarine, Albuterol"
+        content.title = "Suppléments du jour 💊"
+        content.body = "Pense à prendre tes suppléments : RAD-140, Cardarine, Albuterol"
         content.sound = .default
 
         let request = UNNotificationRequest(
-            identifier: "ped-reminder",
+            identifier: "supplement-reminder",
             content: content,
             trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         )
 
         UNUserNotificationCenter.current().add(request)
+    }
+
+    // Alias pour compatibilité
+    private func schedulePEDReminder(at morningTime: Date) {
+        scheduleSupplementReminder(at: morningTime)
     }
 
     // MARK: - Water Reminders

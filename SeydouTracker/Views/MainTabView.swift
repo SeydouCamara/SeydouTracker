@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var selectedTab = 0
+    @AppStorage("hideAdvancedSupplements") private var hideAdvancedSupplements = false
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -11,11 +12,13 @@ struct MainTabView: View {
                 }
                 .tag(0)
 
-            CycleView()
-                .tabItem {
-                    Label("Cycle", systemImage: "calendar.circle.fill")
-                }
-                .tag(1)
+            if !hideAdvancedSupplements {
+                CycleView()
+                    .tabItem {
+                        Label("Cycle", systemImage: "calendar.circle.fill")
+                    }
+                    .tag(1)
+            }
 
             HistoryView()
                 .tabItem {

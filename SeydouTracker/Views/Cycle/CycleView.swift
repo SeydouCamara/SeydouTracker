@@ -29,7 +29,7 @@ struct CycleView: View {
                 .padding(.vertical, 8)
             }
             .background(Color.appGroupedBackground)
-            .navigationTitle("Cycle PEDs")
+            .navigationTitle("Cycle Suppléments")
             .sheet(isPresented: $showingDatePicker) {
                 if let cycle = currentCycle {
                     CycleDatePickerSheet(
@@ -480,7 +480,7 @@ struct NoCycleView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("Démarre un nouveau cycle de 8 semaines pour suivre tes PEDs.")
+            Text("Démarre un nouveau cycle de 8 semaines pour suivre tes suppléments.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

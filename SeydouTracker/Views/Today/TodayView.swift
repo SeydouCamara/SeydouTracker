@@ -4,6 +4,7 @@ import SwiftData
 struct TodayView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = TodayViewModel()
+    @AppStorage("hideAdvancedSupplements") private var hideAdvancedSupplements = false
 
     var body: some View {
         NavigationStack {
@@ -18,8 +19,10 @@ struct TodayView: View {
                     // Section Compléments
                     SupplementSectionView(viewModel: viewModel)
 
-                    // Section PEDs
-                    PEDSectionView(viewModel: viewModel)
+                    // Section Suppléments (anciennement PEDs) - masquable
+                    if !hideAdvancedSupplements {
+                        AdvancedSupplementSectionView(viewModel: viewModel)
+                    }
 
                     // Trackers Eau & Sommeil
                     TrackersView(viewModel: viewModel)
